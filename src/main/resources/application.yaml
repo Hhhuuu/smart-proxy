@@ -1,0 +1,7 @@
+server:
+  port: 8080
+proxy:
+  protocol: http
+  host: localhost
+  port: 8888
+  postfix: ""
