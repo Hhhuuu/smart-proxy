@@ -1,5 +1,6 @@
 package com.simple.proxy.handlers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,5 +30,15 @@ public class ResponseHandlerFactory {
                 .filter(item -> item.matches(request))
                 .findFirst()
                 .orElse(null);
+    }
+
+    @Autowired(required = false)
+    public void setPostHandlers(List<PostResponseHandler> postHandlers) {
+        this.postHandlers = postHandlers;
+    }
+
+    @Autowired(required = false)
+    public void setGetHandlers(List<GetResponseHandler> getHandlers) {
+        this.getHandlers = getHandlers;
     }
 }
