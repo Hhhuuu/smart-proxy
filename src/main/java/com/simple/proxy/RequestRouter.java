@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -47,10 +49,11 @@ public class RequestRouter {
      * @param startWithPath - часть запроса, которое необходимо заменить
      * @return ответ
      */
-    public ResponseEntity<String> get(HttpServletRequest request, String startWithPath) {
+    @Nullable
+    public ResponseEntity<String> get(@NonNull HttpServletRequest request, @NonNull String startWithPath) {
         GetResponseHandler handler = handlerFactory.getHandler(request);
         if (Objects.nonNull(handler)) {
-            return handler.get();
+            return handler.get(request);
         }
 
         String url = prepareQuery(request.getQueryString(), startWithPath);
@@ -73,7 +76,7 @@ public class RequestRouter {
 
         PostResponseHandler handler = handlerFactory.getHandler(request, body, headers);
         if (Objects.nonNull(handler)) {
-            return handler.post();
+            return handler.post(request, body, headers);
         }
 
         String url = prepareQuery(request.getServletPath(), startWithPath);
