@@ -1,6 +1,8 @@
 package com.simple.proxy.handlers;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,10 +19,14 @@ public interface GetResponseHandler {
      * @param request - запрос
      * @return true - запрос необходимо обработать в ручную, false - иначе
      */
-    boolean matches(HttpServletRequest request);
+    boolean matches(@NonNull HttpServletRequest request);
 
     /**
+     * Выполняет GET-запрос.
+     *
+     * @param request - запрос
      * @return ответ
      */
-    ResponseEntity<String> get();
+    @Nullable
+    ResponseEntity<String> get(@NonNull HttpServletRequest request);
 }

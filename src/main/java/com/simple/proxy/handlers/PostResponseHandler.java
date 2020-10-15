@@ -1,6 +1,8 @@
 package com.simple.proxy.handlers;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
@@ -21,12 +23,20 @@ public interface PostResponseHandler {
      * @param headers - список заголовков
      * @return true - запрос необходимо обработать в ручную, false - иначе
      */
-    boolean matches(HttpServletRequest request,
-                    String body,
-                    Map<String, String> headers);
+    boolean matches(@NonNull HttpServletRequest request,
+                    @Nullable String body,
+                    @Nullable Map<String, String> headers);
 
     /**
+     * Выполняет POST-запрос.
+     *
+     * @param request - запрос
+     * @param body    - тело сообщения
+     * @param headers - словарь заголовков
      * @return ответ
      */
-    ResponseEntity<String> post();
+    @Nullable
+    ResponseEntity<String> post(@NonNull HttpServletRequest request,
+                                @Nullable String body,
+                                @Nullable Map<String, String> headers);
 }
